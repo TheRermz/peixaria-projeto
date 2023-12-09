@@ -6,9 +6,10 @@ const { createFish } = require("../controller/FishController");
 
 //middlewares
 const validate = require("../middlewares/handleValidation");
+const { fishValidation } = require("../middlewares/fishValidation");
 
 //routes
 
-router.post("/add", validate, createFish);
+router.post("/add", fishValidation(), validate, createFish);
 
 module.exports = router;
