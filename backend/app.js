@@ -3,6 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const con = require("./config/db");
+const path = require("path");
 con;
 
 const port = process.env.PORT;
@@ -12,6 +13,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(cors({ credential: true, origin: `http://localhost:${port}` }));
+
+//upload directory
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 const router = require("./routes/Router");
 app.use(router);
