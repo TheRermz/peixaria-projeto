@@ -2,8 +2,6 @@ const Fish = require("../model/Fish");
 
 // Create a new fish
 const createFish = async (req, res) => {
-    //request jwt token
-
     const { name, price, description, image, category, quantity } = req.body;
     try {
         const newFish = await Fish.create({
@@ -20,40 +18,82 @@ const createFish = async (req, res) => {
     }
 };
 
-// Get all fishes
+// Get all fishes get"/"
 const getAllFishes = async (req, res) => {
     res.send("getAll");
-    // try {
-    //     const fishes = await Fish.find();
+    try {
+        const fishes = await Fish.find();
 
-    //     res.status(200).json(fishes);
-    // } catch (error) {
-    //     res.status(500).json({ error: error.message });
-    // }
+        res.status(200).json(fishes);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
 };
 
-// Get a fish by id
+// Get a fish by id get"/:id"
 const getFishById = async (req, res) => {
     res.send("getById");
-    // const { id } = req.params;
+    const { id } = req.params;
 
-    // try {
-    //     const fish = await Fish.findById(id);
+    try {
+        const fish = await Fish.findById(id);
 
-    //     if (fish) {
-    //         return res.status(200).json(fish);
-    //     }
+        if (fish) {
+            return res.status(200).json(fish);
+        }
 
-    //     res.status(404).json({ message: "Fish not found!" });
-    // } catch (error) {
-    //     res.status(500).json({ error: error.message });
-    // }
+        res.status(404).json({ message: "Fish not found!" });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
 };
 
-// Update a fish by id
-
+// Update a fish by id put"/:id"
 const updateFishById = async (req, res) => {
-    res.send("update");
+    res.send("updateById");
+    const { id } = req.params;
+    const { name, price, description, image, category, quantity } = req.body;
+
+    try {
+        const fish = await Fish.findByIdAndUpdate(
+            id,
+            {
+                name,
+                price,
+                description,
+                image,
+                category,
+                quantity,
+            },
+            { new: true },
+        );
+
+        if (fish) {
+            return res.status(200).json(fish);
+        }
+
+        res.status(404).json({ message: "Fish not found!" });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+//delete fish by ID delete "/:id"
+const deleteFishById = async (req, res) => {
+    res.send("deleteById");
+    const { id } = req.params;
+
+    try {
+        const fish = await Fish.findByIdAndDelete(id);
+
+        if (fish) {
+            return res.status(200).json({ message: "Fish deleted!" });
+        }
+
+        res.status(404).json({ message: "Fish not found!" });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
 };
 
 module.exports = {
