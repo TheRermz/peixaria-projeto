@@ -41,6 +41,26 @@ const registerNewAdmin = async (req, res) => {
     res.status(201).json({ _id: newUser._id, token: genToken(newUser._id) });
 };
 
+const loginAdmin = async (req, res) => {
+    const { email, password } = req.body;
+
+    const user = await Admin.findOne({ email });
+
+    if (!user) {
+        res.status(404).json({ errors: ["Email não cadastrado"] });
+        return;
+    }
+
+    //check if pwd matches
+    if (!(await bcrypt.compare(password, user.password))) {
+        res.status(401).json({ errors: ["Senha incorreta"] });
+        return;
+    }
+
+    res.status(201).json({ _id: user._id, token: genToken(user._id) });
+};
+
 module.exports = {
     registerNewAdmin,
+    loginAdmin,
 };
