@@ -12,7 +12,33 @@ const genToken = (id) => {
 // Register a new admin
 
 const registerNewAdmin = async (req, res) => {
-    res.send("registerNewAdmin");
+    const { name, email, password } = req.body;
+
+    // check if user exists
+    const user = await Admin.findOne({ email });
+    if (user) {
+        res.status(422).json({ errors: ["Email já cadastrado"] });
+
+        return;
+    }
+    // hash password
+    const salt = await bcrypt.genSalt();
+    const hashPassword = await bcrypt.hash(password, salt);
+
+    //create user
+
+    const newUser = await Admin.create({
+        name,
+        email,
+        password: hashPassword,
+    });
+
+    // if user is created, generate token
+    if (!newUser) {
+        res.status(422).json({ errors: ["Erro ao cadastrar usuário"] });
+        return;
+    }
+    res.status(201).json({ _id: newUser._id, token: genToken(newUser._id) });
 };
 
 module.exports = {
