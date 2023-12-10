@@ -2,7 +2,11 @@ const express = require("express");
 const router = express.Router();
 
 //controller
-const { createFish, getAllFishes } = require("../controller/FishController");
+const {
+    createFish,
+    getAllFishes,
+    getFishById,
+} = require("../controller/FishController");
 
 //middlewares
 const validate = require("../middlewares/handleValidation");
@@ -16,5 +20,6 @@ const authGuard = require("../middlewares/authGuard");
 
 router.post("/add", authGuard, fishValidation(), validate, createFish);
 router.get("/", getAllFishes);
+router.get("/:id", getFishById);
 
 module.exports = router;
