@@ -6,6 +6,7 @@ const AdminSchema = new Schema(
         name: String,
         email: String,
         password: String,
+        confirmPassword: String,
     },
     { timestamps: true },
 );
