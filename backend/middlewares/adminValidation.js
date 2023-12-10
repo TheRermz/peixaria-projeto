@@ -16,4 +16,11 @@ const adminValidation = () => {
     ];
 };
 
-module.exports = { adminValidation };
+const loginValidation = () => {
+    return [
+        body("email").isEmail().withMessage("Coloque um Email válido"),
+        body("password").isString().withMessage("A senha é obrigatória"),
+    ];
+};
+
+module.exports = { adminValidation, loginValidation };
