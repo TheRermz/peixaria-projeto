@@ -20,7 +20,6 @@ const createFish = async (req, res) => {
 
 // Get all fishes get"/"
 const getAllFishes = async (req, res) => {
-    res.send("getAll");
     try {
         const fishes = await Fish.find();
 
@@ -32,7 +31,6 @@ const getAllFishes = async (req, res) => {
 
 // Get a fish by id get"/:id"
 const getFishById = async (req, res) => {
-    res.send("getById");
     const { id } = req.params;
 
     try {
@@ -98,4 +96,6 @@ const deleteFishById = async (req, res) => {
 
 module.exports = {
     createFish,
+    getAllFishes,
+    getFishById,
 };
