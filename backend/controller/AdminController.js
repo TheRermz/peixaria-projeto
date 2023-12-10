@@ -60,7 +60,14 @@ const loginAdmin = async (req, res) => {
     res.status(201).json({ _id: user._id, token: genToken(user._id) });
 };
 
+// get current admin
+const getCurrentAdmin = async (req, res) => {
+    const user = req.user;
+    res.status(200).json(user);
+};
+
 module.exports = {
     registerNewAdmin,
     loginAdmin,
+    getCurrentAdmin,
 };
