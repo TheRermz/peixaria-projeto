@@ -23,4 +23,17 @@ const loginValidation = () => {
     ];
 };
 
-module.exports = { adminValidation, loginValidation };
+const adminUpdateValidation = () => {
+    return [
+        body("name")
+            .optional()
+            .isString()
+            .withMessage("Coloque um Nome válido"),
+        body("password")
+            .optional()
+            .isLength({ min: 6 })
+            .withMessage("Coloque uma senha com no mínimo 6 caracteres"),
+    ];
+};
+
+module.exports = { adminValidation, loginValidation, adminUpdateValidation };
