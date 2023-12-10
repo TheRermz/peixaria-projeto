@@ -91,13 +91,11 @@ const updateAdmin = async (req, res) => {
 
 // get admin by id
 
-const getAdminById = (req, res) => {
+const getAdminById = async (req, res) => {
     const { id } = req.params;
 
     try {
-        const user = Admin.findById(mongoose.Types.ObjectId(id)).select(
-            "-password",
-        );
+        const user = await Admin.findById(id).select("-password");
         if (!user) {
             res.status(404).json({ errors: ["Usuário não encontrado"] });
             return;
@@ -109,10 +107,31 @@ const getAdminById = (req, res) => {
     }
 };
 
+// delete an admin
+const delAdmin = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const user = await Admin.findById(id);
+
+        if (!user) {
+            res.status(404).json({ errors: ["Usuário não encontrado"] });
+            return;
+        }
+
+        await user.deleteOne();
+        return res.status(200).json({ message: "Usuário removido" });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ errors: ["Erro ao excluir usuário"] });
+    }
+};
+
 module.exports = {
     registerNewAdmin,
     loginAdmin,
     getCurrentAdmin,
     updateAdmin,
     getAdminById,
+    delAdmin,
 };

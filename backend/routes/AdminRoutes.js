@@ -8,6 +8,7 @@ const {
     getCurrentAdmin,
     updateAdmin,
     getAdminById,
+    delAdmin,
 } = require("../controller/AdminController");
 
 //middlewares
@@ -25,5 +26,6 @@ router.post("/login", loginValidation(), validate, loginAdmin); //admin login
 router.get("/profile", authGuard, getCurrentAdmin); //get current admin
 router.put("/", authGuard, adminUpdateValidation(), validate, updateAdmin); //update admin (name, password
 router.get("/:id", getAdminById); //get admin by id
+router.delete("/:id", authGuard, delAdmin); //delete an admin (only for testing
 
 module.exports = router;
