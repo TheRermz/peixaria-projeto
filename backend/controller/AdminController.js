@@ -1,6 +1,7 @@
 const Admin = require("../model/Admin");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const mongoose = require("mongoose");
 const JWT_SECRET = process.env.JWT_SECRET;
 
 const genToken = (id) => {
@@ -66,8 +67,52 @@ const getCurrentAdmin = async (req, res) => {
     res.status(200).json(user);
 };
 
+//update an admin
+const updateAdmin = async (req, res) => {
+    const reqUser = req.user;
+    const { name, password } = req.body;
+
+    const user = await Admin.findById(reqUser._id).select("-password");
+
+    if (name) {
+        user.name = name;
+    }
+
+    if (password) {
+        const salt = await bcrypt.genSalt();
+        const hashPassword = await bcrypt.hash(password, salt);
+        user.password = hashPassword;
+    }
+
+    const updatedUser = await user.save();
+
+    res.status(200).json(updatedUser);
+};
+
+// get admin by id
+
+const getAdminById = (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const user = Admin.findById(mongoose.Types.ObjectId(id)).select(
+            "-password",
+        );
+        if (!user) {
+            res.status(404).json({ errors: ["Usuário não encontrado"] });
+            return;
+        }
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(404).json({ errors: ["Usuário não encontrado"] });
+        return;
+    }
+};
+
 module.exports = {
     registerNewAdmin,
     loginAdmin,
     getCurrentAdmin,
+    updateAdmin,
+    getAdminById,
 };
