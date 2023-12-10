@@ -14,7 +14,7 @@ const createFish = async (req, res) => {
         });
         res.status(201).json(newFish);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        res.status(500).json({ errors: error.message });
     }
 };
 
@@ -25,7 +25,7 @@ const getAllFishes = async (req, res) => {
 
         res.status(200).json(fishes);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        res.status(500).json({ errors: error.message });
     }
 };
 
@@ -40,15 +40,14 @@ const getFishById = async (req, res) => {
             return res.status(200).json(fish);
         }
 
-        res.status(404).json({ message: "Fish not found!" });
+        res.status(404).json({ errors: ["Peixe não encontrado!"] });
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        res.status(500).json({ errors: ["Erro ao buscar o peixe"] });
     }
 };
 
 // Update a fish by id put"/:id"
 const updateFishById = async (req, res) => {
-    res.send("updateById");
     const { id } = req.params;
     const { name, price, description, image, category, quantity } = req.body;
 
@@ -70,27 +69,26 @@ const updateFishById = async (req, res) => {
             return res.status(200).json(fish);
         }
 
-        res.status(404).json({ message: "Fish not found!" });
+        res.status(404).json({ errors: ["Peixe não encontrado!"] });
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        res.status(500).json({ errors: ["Erro ao atualizar o peixe"] });
     }
 };
 
 //delete fish by ID delete "/:id"
 const deleteFishById = async (req, res) => {
-    res.send("deleteById");
     const { id } = req.params;
 
     try {
         const fish = await Fish.findByIdAndDelete(id);
 
         if (fish) {
-            return res.status(200).json({ message: "Fish deleted!" });
+            return res.status(200).json({ message: "Peixe apagado!" });
         }
 
-        res.status(404).json({ message: "Fish not found!" });
+        res.status(404).json({ errors: ["Peixe não encontrado!"] });
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        res.status(500).json({ errors: ["Erro ao deletar o peixe"] });
     }
 };
 
@@ -98,4 +96,6 @@ module.exports = {
     createFish,
     getAllFishes,
     getFishById,
+    updateFishById,
+    deleteFishById,
 };
