@@ -4,7 +4,7 @@ const Navbar = () => {
   return (
     <nav id="navbar">
       <div className="nav-wrapper">
-        <ul id="nav-mobile" className="left">
+        <ul id="nav-mobile" className="center">
           <li>
             <h3>
               <Link to="/">Home</Link>
