@@ -8,7 +8,14 @@ const Register = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log("submit");
+
+    const admin = {
+      name,
+      email,
+      password,
+      confirmPassword,
+    };
+    console.log(admin);
   };
   return (
     <div className="reg">
@@ -20,10 +27,19 @@ const Register = () => {
             name="name"
             id="name"
             placeholder="Nome do administrador"
+            value={name || ""}
+            onChange={(e) => setName(e.target.value)}
           />
         </label>
         <label htmlFor="email">
-          <input type="email" name="email" id="email" placeholder="Email" />
+          <input
+            type="email"
+            name="email"
+            id="email"
+            placeholder="Email"
+            value={email || ""}
+            onChange={(e) => setEmail(e.target.value)}
+          />
         </label>
         <label htmlFor="password">
           <input
@@ -31,6 +47,8 @@ const Register = () => {
             name="password"
             id="password"
             placeholder="Senha"
+            value={password || ""}
+            onChange={(e) => setPassword(e.target.value)}
           />
         </label>
         <label htmlFor="confirmPassword">
@@ -39,6 +57,8 @@ const Register = () => {
             name="confirmPassword"
             id="confirmPassword"
             placeholder="Confirme a Senha"
+            value={confirmPassword || ""}
+            onChange={(e) => setConfirmPassword(e.target.value)}
           />
         </label>
         <label htmlFor="btn-submit">
