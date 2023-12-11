@@ -12,7 +12,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use(cors({ credential: true, origin: `http://localhost:${port}` }));
+app.use(cors({ credential: true, origin: `http://localhost:5173` }));
 
 //upload directory
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
