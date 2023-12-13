@@ -1,10 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./Auth.css";
+import { regAdmin, reset } from "../../slices/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import Message from "../../components/Message";
 const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+
+  const dispatch = useDispatch();
+
+  const { loading, error } = useSelector((state) => state.auth);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -16,7 +23,15 @@ const Register = () => {
       confirmPassword,
     };
     console.log(admin);
+    dispatch(regAdmin(admin));
   };
+
+  useEffect(() => {
+    return () => {
+      dispatch(reset());
+    };
+  }, [dispatch]);
+
   return (
     <div className="reg">
       <h1>Cadastro de novo administrador</h1>
@@ -62,9 +77,17 @@ const Register = () => {
           />
         </label>
         <label htmlFor="btn-submit">
-          <button type="submit" value="register">
-            Cadastrar
-          </button>
+          {error && <Message msg={error} type="error" />}
+          {!loading && (
+            <button type="submit" value="register">
+              Cadastrar
+            </button>
+          )}
+          {loading && (
+            <button type="submit" value="register" disabled>
+              Aguarde
+            </button>
+          )}
         </label>
       </form>
     </div>
