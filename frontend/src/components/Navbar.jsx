@@ -4,10 +4,21 @@ import "./Navbar.css";
 import { useState } from "react";
 import { useAuth } from "../hooks/useAuth";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
+import { logoutAdmin, reset } from "../slices/authSlice";
 
 const Navbar = () => {
   const { auth } = useAuth();
   const { user } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(logoutAdmin());
+    dispatch(reset());
+    navigate("/");
+  };
   return (
     <nav id="navbar">
       <div className="nav-wrapper">
@@ -27,9 +38,9 @@ const Navbar = () => {
                 </li>
               )}
               <li>
-                <h3>
-                  <Link to="/logout">Logout</Link>
-                </h3>
+                <span>
+                  <button onClick={handleLogout}>Logout</button>
+                </span>
               </li>
             </>
           ) : (

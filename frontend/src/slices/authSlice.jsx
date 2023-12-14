@@ -40,6 +40,10 @@ export const loginAdmin = createAsyncThunk(
 );
 
 // logout an admin
+export const logoutAdmin = createAsyncThunk("auth/logoutAdmin", async () => {
+  await authService.logoutAdmin();
+  return null;
+});
 
 export const authSlice = createSlice({
   name: "auth",
@@ -75,6 +79,19 @@ export const authSlice = createSlice({
       state.user = action.payload;
     });
     builder.addCase(loginAdmin.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    });
+    // logout admin
+    builder.addCase(logoutAdmin.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(logoutAdmin.fulfilled, (state, action) => {
+      state.loading = false;
+      state.success = true;
+      state.user = action.payload;
+    });
+    builder.addCase(logoutAdmin.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload;
     });

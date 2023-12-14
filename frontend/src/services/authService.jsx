@@ -36,9 +36,15 @@ const loginAdmin = async (admin) => {
   }
 };
 
+// logout an admin
+const logoutAdmin = () => {
+  localStorage.removeItem("admin");
+};
+
 const authService = {
   regAdmin,
   loginAdmin,
+  logoutAdmin,
 };
 
 export default authService;
