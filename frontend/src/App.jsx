@@ -11,6 +11,7 @@ import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
 import Navbar from "./components/Navbar";
 import AdminProfile from "./pages/AdminProfile/AdminProfile";
+import AdminEdit from "./pages/AdminEdit/AdminEdit";
 
 const App = () => {
   const { auth, loading } = useAuth();
@@ -35,6 +36,10 @@ const App = () => {
           <Route
             path="/profile/:id"
             element={auth ? <AdminProfile /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/profile/edit"
+            element={auth ? <AdminEdit /> : <Navigate to="/" />}
           />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
