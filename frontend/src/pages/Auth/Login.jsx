@@ -51,12 +51,12 @@ const Login = () => {
         <label htmlFor="btn-submit">
           {error && <Message msg={error} type="error" />}
           {!loading && (
-            <button type="submit" value="register">
-              Cadastrar
+            <button type="submit" value="login">
+              Entrar
             </button>
           )}
           {loading && (
-            <button type="submit" value="register" disabled>
+            <button type="submit" value="login" disabled>
               Aguarde
             </button>
           )}
