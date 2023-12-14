@@ -10,6 +10,7 @@ import Home from "./pages/Home/Home";
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
 import Navbar from "./components/Navbar";
+import AdminProfile from "./pages/AdminProfile/AdminProfile";
 
 const App = () => {
   const { auth, loading } = useAuth();
@@ -31,6 +32,7 @@ const App = () => {
             path="/register"
             element={!auth ? <Register /> : <Navigate to="/" />}
           />
+          <Route path="/profile/:id" element={<AdminProfile />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </BrowserRouter>
