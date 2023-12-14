@@ -32,7 +32,10 @@ const App = () => {
             path="/register"
             element={!auth ? <Register /> : <Navigate to="/" />}
           />
-          <Route path="/profile/:id" element={<AdminProfile />} />
+          <Route
+            path="/profile/:id"
+            element={auth ? <AdminProfile /> : <Navigate to="/" />}
+          />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </BrowserRouter>
